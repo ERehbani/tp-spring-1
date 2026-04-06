@@ -2,6 +2,7 @@ package org.eduardomango.practicaspringweb.model.services;
 
 
 import org.eduardomango.practicaspringweb.model.entities.UserEntity;
+import org.eduardomango.practicaspringweb.model.exceptions.ProductNotFoundException;
 import org.eduardomango.practicaspringweb.model.exceptions.UserNotFoundException;
 import org.eduardomango.practicaspringweb.model.repositories.IRepository;
 import org.eduardomango.practicaspringweb.model.repositories.UserRepository;
@@ -56,6 +57,9 @@ public class UserService {
 
     public void update(UserEntity user, int id) {
         UserEntity existingUser = findById(id);
-        userRepository.update(user, existingUser);
+        if(existingUser != null)
+            userRepository.update(user, existingUser);
+        throw new UserNotFoundException("El usuario no existe en la bdd");
+
     }
 }

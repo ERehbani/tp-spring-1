@@ -39,8 +39,11 @@ public class SaleRepository implements IRepository<SaleEntity> {
         return List.copyOf(sales);
     }
 
-    public void save(SaleEntity sale) {
-        sales.add(sale);
+    public void save(SaleEntity newSale) {
+        int lastID = sales.size() + 1;
+        newSale.setId((long) lastID);
+        sales.add(newSale);
+        sales.add(newSale);
     }
 
     public void delete(SaleEntity sale) {

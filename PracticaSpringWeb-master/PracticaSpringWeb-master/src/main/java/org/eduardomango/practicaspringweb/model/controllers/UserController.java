@@ -16,8 +16,11 @@ import java.util.List;
 @RequestMapping("/users")
 
 public class UserController {
-    UserRepository userRepository = new UserRepository();
-    UserService userService = new UserService(userRepository);
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping
     public List<UserEntity> findAll() {
@@ -45,8 +48,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     public String edit(@RequestBody UserEntity newUser, @PathVariable int id) {
-        System.out.println(id);
-        System.out.println(newUser);
+
         userService.update(newUser, id);
         return "Usuario " + id + " actualizado";
     }

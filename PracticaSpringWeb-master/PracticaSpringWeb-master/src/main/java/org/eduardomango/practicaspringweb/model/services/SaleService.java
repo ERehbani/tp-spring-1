@@ -19,12 +19,11 @@ public class SaleService {
     private final ProductService productService;
     private final UserService userService;
 
-    public SaleService(IRepository<SaleEntity> saleRepository, SaleRepository saleRepository1, ProductService productService, UserService userService) {
+    public SaleService(SaleRepository saleRepository1, ProductService productService, UserService userService) {
         this.saleRepository = saleRepository1;
         this.productService = productService;
         this.userService = userService;
     }
-
 
     public List<SaleEntity> findAll() {
         return saleRepository.findAll();
@@ -39,7 +38,7 @@ public class SaleService {
     }
 
 
-    public SaleEntity registerSale (int idCliente, int idProducto, Long quantity){
+    public SaleEntity registerSale (int idCliente, int idProducto, int quantity){
         ProductEntity product = productService.findById(idProducto);
         UserEntity user = userService.findById(idCliente);
 
@@ -47,12 +46,11 @@ public class SaleService {
                 .id(System.currentTimeMillis())
                 .products(product)
                 .client(user)
-                .quantity(quantity)
+                .quantity((long) quantity)
                 .saleDate(LocalDate.now())
                 .build();
 
         saleRepository.save(sale);
-        System.out.println("se guardo kumpa");
         return sale;
     }
 

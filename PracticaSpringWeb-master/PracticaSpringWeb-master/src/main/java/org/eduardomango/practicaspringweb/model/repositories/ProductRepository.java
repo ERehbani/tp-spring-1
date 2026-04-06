@@ -42,6 +42,8 @@ public class ProductRepository implements IRepository<ProductEntity> {
     }
 
     public void save(ProductEntity product) {
+        int lastID = products.size() + 1;
+        product.setId(lastID);
         products.add(product);
     }
 
@@ -49,8 +51,9 @@ public class ProductRepository implements IRepository<ProductEntity> {
         products.remove(product);
     }
 
-    public void update(ProductEntity product, ProductEntity id) {
-        int index = products.indexOf(product);
-        products.set(index, product);
+    public void update(ProductEntity product, ProductEntity existingProduct) {
+        existingProduct.setName(product.getName());
+        existingProduct.setPrice(product.getPrice());
+        existingProduct.setDescription(product.getDescription());
     }
 }

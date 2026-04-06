@@ -12,10 +12,10 @@ import java.util.List;
 @Service
 public class ProductService {
 
-    private final IRepository<ProductEntity> productRepository;
+    private final ProductRepository productRepository;
 
     public ProductService(IRepository<ProductEntity> productRepository) {
-        this.productRepository = productRepository;
+        this.productRepository = (ProductRepository) productRepository;
     }
 
     public List<ProductEntity> findAll() {
@@ -53,6 +53,8 @@ public class ProductService {
     }
 
     public void update(ProductEntity p, int id) {
-        // productRepository.update(p, id);
+        ProductEntity existingProduct = findById(id);
+        if(existingProduct != null)
+         productRepository.update(p, existingProduct);
     }
 }
