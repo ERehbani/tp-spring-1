@@ -36,7 +36,6 @@ public class SaleController {
            return ResponseEntity.ok(saleService.findById(id));
        } catch (SaleNotFoundException e) {
            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-
        }
     }
 

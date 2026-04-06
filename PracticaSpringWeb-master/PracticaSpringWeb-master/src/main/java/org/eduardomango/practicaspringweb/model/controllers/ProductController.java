@@ -1,6 +1,9 @@
 package org.eduardomango.practicaspringweb.model.controllers;
 
 import org.eduardomango.practicaspringweb.model.entities.ProductEntity;
+import org.eduardomango.practicaspringweb.model.entities.SaleEntity;
+import org.eduardomango.practicaspringweb.model.exceptions.ProductNotFoundException;
+import org.eduardomango.practicaspringweb.model.exceptions.SaleNotFoundException;
 import org.eduardomango.practicaspringweb.model.repositories.ProductRepository;
 import org.eduardomango.practicaspringweb.model.services.ProductService;
 import org.springframework.http.HttpStatus;
@@ -21,15 +24,18 @@ public class ProductController {
 
 
     @GetMapping
-    public List<ProductEntity> getProducts() {
-        return productService.findAll();
+    public ResponseEntity<List<ProductEntity>> getProducts() {
+        return ResponseEntity.ok(productService.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductEntity> getByID(@PathVariable Long id) {
-        ProductEntity product = productService.findById(id);
-        if(product != null) return ResponseEntity.ok(product);
-        return ResponseEntity.notFound().build();
+        try {
+            if(id <= 0) return ResponseEntity.badRequest().build();
+            return ResponseEntity.ok(productService.findById(id));
+        } catch (ProductNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @PostMapping
