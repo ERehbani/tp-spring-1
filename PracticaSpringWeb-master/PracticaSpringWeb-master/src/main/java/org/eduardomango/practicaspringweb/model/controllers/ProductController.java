@@ -30,12 +30,8 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductEntity> getByID(@PathVariable Long id) {
-        try {
             if(id <= 0) return ResponseEntity.badRequest().build();
             return ResponseEntity.ok(productService.findById(id));
-        } catch (ProductNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
     }
 
     @PostMapping
