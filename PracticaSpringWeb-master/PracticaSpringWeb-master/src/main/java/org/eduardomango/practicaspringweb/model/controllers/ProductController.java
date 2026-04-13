@@ -1,10 +1,6 @@
 package org.eduardomango.practicaspringweb.model.controllers;
 
 import org.eduardomango.practicaspringweb.model.entities.ProductEntity;
-import org.eduardomango.practicaspringweb.model.entities.SaleEntity;
-import org.eduardomango.practicaspringweb.model.exceptions.ProductNotFoundException;
-import org.eduardomango.practicaspringweb.model.exceptions.SaleNotFoundException;
-import org.eduardomango.practicaspringweb.model.repositories.ProductRepository;
 import org.eduardomango.practicaspringweb.model.services.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,21 +24,17 @@ public class ProductController {
         return ResponseEntity.ok(productService.findAll());
     }
 
+
     @GetMapping("/{id}")
     public ResponseEntity<ProductEntity> getByID(@PathVariable Long id) {
             if(id <= 0) return ResponseEntity.badRequest().build();
             return ResponseEntity.ok(productService.findById(id));
     }
 
+
     @PostMapping
-    public ResponseEntity<ProductEntity> save(@RequestBody ProductEntity newProduct) {
-        if( newProduct == null ||
-                newProduct.getName() == null || newProduct.getName().isBlank() ||
-                newProduct.getDescription() == null || newProduct.getDescription().isBlank() ||
-                newProduct.getPrice() <= 0 ||
-                newProduct.getId() != 0){
-            return ResponseEntity.badRequest().build();
-        }
+    public ResponseEntity<ProductEntity>
+    save(@RequestBody ProductEntity newProduct) {
         productService.save(newProduct);
         return ResponseEntity.status(HttpStatus.CREATED).body(newProduct);
     }

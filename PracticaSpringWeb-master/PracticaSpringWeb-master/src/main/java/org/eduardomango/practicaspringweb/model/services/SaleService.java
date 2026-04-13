@@ -1,4 +1,5 @@
 package org.eduardomango.practicaspringweb.model.services;
+import org.eduardomango.practicaspringweb.model.DTOs.User.UserDTO;
 import org.eduardomango.practicaspringweb.model.entities.ProductEntity;
 import org.eduardomango.practicaspringweb.model.entities.SaleEntity;
 import org.eduardomango.practicaspringweb.model.entities.UserEntity;
@@ -40,7 +41,7 @@ public class SaleService {
 
     public SaleEntity registerSale (int idCliente, int idProducto, int quantity){
         ProductEntity product = productService.findById(idProducto);
-        UserEntity user = userService.findById(idCliente);
+        UserDTO user = userService.findById(idCliente);
 
         SaleEntity sale = SaleEntity.builder()
                 .id(System.currentTimeMillis())

@@ -1,6 +1,7 @@
 package org.eduardomango.practicaspringweb.model.services;
 
 
+import org.eduardomango.practicaspringweb.model.DTOs.User.UserDTO;
 import org.eduardomango.practicaspringweb.model.entities.UserEntity;
 import org.eduardomango.practicaspringweb.model.exceptions.ProductNotFoundException;
 import org.eduardomango.practicaspringweb.model.exceptions.UserNotFoundException;
@@ -20,18 +21,18 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<UserEntity> findAll() {
+    public List<UserDTO> findAll() {
         return userRepository.findAll();
     }
-    public UserEntity findById(int id) {
+    public UserDTO findById(int id) {
         return userRepository.findAll()
                 .stream()
                 .filter(user -> user.getId() == id)
                 .findFirst()
-                .orElseThrow(UserNotFoundException::new);
+                .orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    public UserEntity findByUsername(String username){
+    public UserDTO findByUsername(String username){
         return userRepository.findAll()
                 .stream()
                 .filter(user -> user.getUsername().equalsIgnoreCase(username))
@@ -39,7 +40,7 @@ public class UserService {
                 .orElseThrow(UserNotFoundException::new);
     }
 
-    public UserEntity findByEmail(String email){
+    public UserDTO findByEmail(String email){
         return userRepository.findAll()
                 .stream()
                 .filter(user -> user.getEmail().equalsIgnoreCase(email))
@@ -47,16 +48,16 @@ public class UserService {
                 .orElseThrow(UserNotFoundException::new);
     }
 
-    public void save(UserEntity user) {
+    public void save(UserDTO user) {
         userRepository.save(user);
     }
 
-    public void delete(UserEntity user) {
+    public void delete(UserDTO user) {
         userRepository.delete(user);
     }
 
-    public void update(UserEntity user, int id) {
-        UserEntity existingUser = findById(id);
+    public void update(UserDTO user, int id) {
+        UserDTO existingUser = findById(id);
         if(existingUser != null)
             userRepository.update(user, existingUser);
         throw new UserNotFoundException("El usuario no existe en la bdd");

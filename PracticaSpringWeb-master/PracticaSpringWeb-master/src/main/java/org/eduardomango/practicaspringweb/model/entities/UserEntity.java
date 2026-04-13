@@ -1,6 +1,7 @@
 package org.eduardomango.practicaspringweb.model.entities;
 
 import lombok.*;
+import org.eduardomango.practicaspringweb.model.DTOs.User.UserDTO;
 
 @Getter
 @Setter

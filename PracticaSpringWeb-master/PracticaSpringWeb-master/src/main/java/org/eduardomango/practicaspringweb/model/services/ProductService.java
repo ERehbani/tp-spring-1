@@ -21,12 +21,13 @@ public class ProductService {
     public List<ProductEntity> findAll() {
         return productRepository.findAll();
     }
+
     public ProductEntity findById(long id) {
         return productRepository.findAll()
                 .stream()
                 .filter(p -> p.getId() == id)
                 .findFirst()
-                .orElseThrow(ProductNotFoundException::new);
+                .orElseThrow(() -> new ProductNotFoundException(id));
     }
 
     public ProductEntity findByName(String name){

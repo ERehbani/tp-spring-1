@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.eduardomango.practicaspringweb.model.DTOs.User.UserDTO;
 
 @Getter
 @Setter
@@ -19,6 +20,6 @@ public class SaleEntity {
     private Long id;
     private ProductEntity products;
     private Long quantity;
-    private UserEntity client;
+    private UserDTO client;
     private LocalDate saleDate;
 }
